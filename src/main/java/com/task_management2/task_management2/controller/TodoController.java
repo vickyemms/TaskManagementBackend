@@ -39,7 +39,8 @@ public class TodoController {
     public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo updatedTodo) {
         return todoRepository.findById(id)
                 .map(todo -> {
-                    todo.setTask(updatedTodo.getTask()); // Only updating the task
+                    todo.setTask(updatedTodo.getTask());
+                    todo.setCompleted(updatedTodo.isCompleted()); // ✅ Update 'completed'
                     return ResponseEntity.ok(todoRepository.save(todo));
                 })
                 .orElse(ResponseEntity.notFound().build());
